@@ -4,12 +4,16 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import dtos.Client;
 
@@ -39,6 +43,15 @@ public class HomeController {
 	public String handleSignUpSubmit(@RequestParam("userName") String userName, Model model) {
 		model.addAttribute("userName", userName);
 		return "helloNewUser";		
+	}
+	
+	@RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public @ResponseBody Client user(@PathVariable long userId, Model model) {
+		Client c = new Client();
+		c.setName("Mark");
+		c.setSurname("Hunt");
+		return c;
 	}
 	
 }
