@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import boundary.ClientFacade;
+import boundary.HelloWorldPort;
 import dtos.Client;
 
 @Controller
@@ -25,9 +27,13 @@ public class HomeController {
 	@Autowired
 	private ClientFacade clientFacade;
 	
+	@Autowired
+	@Qualifier("helloClient")
+	private HelloWorldPort helloWorldPort;
 	
 	@RequestMapping("/test")
 	public String handle(Map<String, Object> model) {
+		System.out.println(helloWorldPort.hello().getGreeting());
 		return "index";
 	}
 	
